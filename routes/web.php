@@ -14,8 +14,12 @@ use App\Http\Controllers\PlaylistController;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
 Route::get('/invoices/{id}', [InvoiceController::class, 'show'])->name('invoices.show');
 
-Route::get('/', [PlaylistController::class, 'index'])->name('playlists.index');
+Route::get('/playlists', [PlaylistController::class, 'index'])->name('playlists.index');
 Route::get('/playlists/{id}', [PlaylistController::class, 'show'])->name('playlists.show');
