@@ -22,7 +22,7 @@
                     <td>{{$playlistTrack->track}}</td>
                     <td>{{$playlistTrack->album}}</td>
                     <td>{{$playlistTrack->artist}}</td>
-                    <td>${{$playlistTrack->genre}}</td>
+                    <td>{{$playlistTrack->genre}}</td>
                 </tr>
             @endforeach
         </tbody>
