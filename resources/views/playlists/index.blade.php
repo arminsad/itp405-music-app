@@ -21,6 +21,11 @@
                             {{$playlist->name}}
                         </a>
                     </td>
+                    <td>
+                        <a href="{{route('playlists.edit', ['id' => $playlist->id])}}">
+                            Rename
+                        </a>
+                    </td>
                 </tr>
             @endforeach
         </tbody>
