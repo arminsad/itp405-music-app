@@ -27,6 +27,11 @@
                             Tracks
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('albumelo.index')}}">
+                            Albums (Eloquent)
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="col-9">

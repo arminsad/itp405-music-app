@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\TrackController;
+use App\Http\Controllers\AlbumeloController;
+use App\Models\Artist;
+use App\Models\Track;
+use App\Models\Genre;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +19,65 @@ use App\Http\Controllers\TrackController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/eloquent', function() {
+    //  QUERYING
+    
+    // return view('eloquent.tracks', [
+    //     'tracks' => Track::all(),
+    // ]);
+    
+    // return view('eloquent.artists', [
+    //     'artists' => Artist::orderBy('name', 'desc')->get(),
+    // ]);
+
+    // return view('eloquent.tracks', [
+    //     'tracks' => Track::where('unit_price', '>', 0.99)->orderBy('name')->get(),
+    // ]);
+
+    // return view('eloquent.artist', [
+    //     'artist' => Artist::find(3),
+    // ]);
+
+    // CREATING
+    // $genre = new Genre();
+    // $genre->name = 'Hip Hop';
+    // $genre->save();
+
+    // DELETING
+    // $genre = Genre::find(30);
+    // $genre->delete();
+
+    //UPDATING
+    // $genre = Genre::where('name', '=', 'Alternative and Punk')->first();
+    // $genre->name = 'Alternative & Punk';
+    // $genre->save();
+
+    //RELATIONSHIPS
+    // return view('eloquent.has-many', [
+    //     'artist' => Artist::find(50), //Metallica
+    // ]);
+
+    // return view('eloquent.belongs-to', [
+    //     'album' => Album::find(152), //Master of Puppets
+    // ]);
+
+    // EAGER LOADING
+    return view('eloquent.eager-loading', [
+    //     'tracks' => Track::where('unit_price', '>', 0.99)
+    //     ->orderBy('name')
+    //     ->limit(5)
+    //     ->get(),
+    // ]);
+
+    // Fixes the N+1 problem via Eager Loading
+        'tracks' => Track::with(['album'])
+        ->where('unit_price', '>', 0.99)
+        ->orderBy('name')
+        ->limit(5)
+        ->get(),
+    ]);
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,3 +99,10 @@ Route::get('/tracks/create', [TrackController::class, 'create'])->name('track.cr
 Route::post('/tracks', [TrackController::class, 'store'])->name('track.store');
 Route::get('/playlists/{id}/edit', [PlaylistController::class, 'edit'])->name('playlists.edit');
 Route::post('/playlists/{id}', [PlaylistController::class, 'update'])->name('playlists.update');
+
+Route::get('/albumselo', [AlbumeloController::class, 'index'])->name('albumelo.index');
+Route::get('/albumselo/create', [AlbumeloController::class, 'create'])->name('albumelo.create');
+Route::post('/albumselo', [AlbumeloController::class, 'store'])->name('albumelo.store');
+Route::get('/albumselo/{id}/edit', [AlbumeloController::class, 'edit'])->name('albumelo.edit');
+Route::post('/albumselo/{id}', [AlbumeloController::class, 'update'])->name('albumelo.update');
+
