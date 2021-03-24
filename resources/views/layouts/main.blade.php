@@ -17,11 +17,13 @@
                             Albums
                         </a>
                     </li>
+                    @can ('viewAny', App\Models\Invoice::class)
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('invoices.index')}}">
                             Invoices
                         </a>
                     </li>
+                    @endcan
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('track.index')}}">
                             Tracks

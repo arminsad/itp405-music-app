@@ -85,7 +85,7 @@ Route::get('/eloquent', function() {
 });
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('invoice.index');
 });
 
 
@@ -99,6 +99,16 @@ Route::middleware(['custom-auth'])->group(function (){
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
         Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
         Route::get('/invoices/{id}', [InvoiceController::class, 'show'])->name('invoices.show');
+
+        Route::get('/albums/create', [AlbumController::class, 'create'])->name('album.create');
+        Route::post('/albums', [AlbumController::class, 'store'])->name('album.store');
+        Route::get('/albums/{id}/edit', [AlbumController::class, 'edit'])->name('album.edit');
+        Route::post('/albums/{id}', [AlbumController::class, 'update'])->name('album.update');
+        
+        Route::get('/albumselo/create', [AlbumeloController::class, 'create'])->name('albumelo.create');
+        Route::post('/albumselo', [AlbumeloController::class, 'store'])->name('albumelo.store');
+        Route::get('/albumselo/{id}/edit', [AlbumeloController::class, 'edit'])->name('albumelo.edit');
+        Route::post('/albumselo/{id}', [AlbumeloController::class, 'update'])->name('albumelo.update');
     });
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
@@ -113,12 +123,9 @@ Route::middleware(['custom-auth'])->group(function (){
 Route::middleware(['maintenance'])->group(function (){
     Route::get('/playlists', [PlaylistController::class, 'index'])->name('playlists.index');
     Route::get('/playlists/{id}', [PlaylistController::class, 'show'])->name('playlists.show');
-    Route::get('/albums', [AlbumController::class, 'index'])->name('album.index');
-    Route::get('/albums/create', [AlbumController::class, 'create'])->name('album.create');
-    Route::post('/albums', [AlbumController::class, 'store'])->name('album.store');
-    Route::get('/albums/{id}/edit', [AlbumController::class, 'edit'])->name('album.edit');
-    Route::post('/albums/{id}', [AlbumController::class, 'update'])->name('album.update');
 
+    Route::get('/albums', [AlbumController::class, 'index'])->name('album.index');
+   
     Route::get('/tracks', [TrackController::class, 'index'])->name('track.index');
     Route::get('/tracks/create', [TrackController::class, 'create'])->name('track.create');
     Route::post('/tracks', [TrackController::class, 'store'])->name('track.store');
@@ -126,10 +133,7 @@ Route::middleware(['maintenance'])->group(function (){
     Route::post('/playlists/{id}', [PlaylistController::class, 'update'])->name('playlists.update');
 
     Route::get('/albumselo', [AlbumeloController::class, 'index'])->name('albumelo.index');
-    Route::get('/albumselo/create', [AlbumeloController::class, 'create'])->name('albumelo.create');
-    Route::post('/albumselo', [AlbumeloController::class, 'store'])->name('albumelo.store');
-    Route::get('/albumselo/{id}/edit', [AlbumeloController::class, 'edit'])->name('albumelo.edit');
-    Route::post('/albumselo/{id}', [AlbumeloController::class, 'update'])->name('albumelo.update');
+    
 
     Route::get('/register', [RegistrationController::class, 'index'])->name('registration.index');
     Route::post('/register', [RegistrationController::class, 'register'])->name('registration.create');

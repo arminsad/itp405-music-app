@@ -44,4 +44,14 @@ class User extends Authenticatable
     public function role(){
         return $this->belongsTo(Role::class);
     }
+
+    public function isCustomer() 
+    {
+        return Customer::where('email', '=', $this->email)->count() > 0;
+    }
+
+    public function isAdmin()
+    {
+        return $this->role->slug === 'admin';
+    }
 }

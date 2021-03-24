@@ -15,4 +15,10 @@ class Album extends Model
         // album.artist_id is FK column
         return $this->belongsTo(Artist::class);
     }
+
+    public function user()
+    {
+        // album.artist_id is FK column
+        return $this->belongsTo(User::class);
+    }
 }
