@@ -14,7 +14,9 @@
                 <th>Album</th>
                 <th>Artist</th>
                 <th>Creator</th>
+                @if(Auth::check())
                 <th>Action</th>
+                @endif
             </tr>
         </thead>
         <tbody>
