@@ -15,7 +15,7 @@
     </form>
     <form method="post" action="{{ route('stats') }}">
         @csrf
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary mt-1">
             Email Stats to Users
         </button>
     </form>
