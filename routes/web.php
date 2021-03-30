@@ -13,6 +13,11 @@ use App\Http\Controllers\SettingsController;
 use App\Models\Artist;
 use App\Models\Track;
 use App\Models\Genre;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewAlbum;
+use App\Models\Album;
+use App\Jobs\AnnounceNewAlbum;
+use App\Jobs\DisplayStats;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +29,29 @@ use App\Models\Genre;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/mail', function(){
+    // Mail::raw('What is your favorite framework?', function ($message){
+    //     $message->to('dtang@usc.edu')->subject('Hello David');
+    // });
+
+    // dispatch(function () {
+    //     $masterOfPuppets = Album::find(152);
+    //     Mail::to('dtang@usc.edu')->send(new NewAlbum($masterOfPuppets));
+    // });
+
+    // $jaggedLittlePill = Album::find(6);
+    // Mail::to('dtang@usc.edu')->queue(new NewAlbum($jaggedLittlePill));
+
+    $jaggedLittlePill = Album::find(6);
+    AnnounceNewAlbum::dispatch($jaggedLittlePill);
+    // dispatch(new AnnounceNewAlbum($jaggedLittlePill)); // same as above    
+
+
+    // return view('email.new-album', [
+    //     'album' => Album::first(),
+    // ]);
+});
 
 Route::get('/eloquent', function() {
     //  QUERYING
@@ -85,7 +113,7 @@ Route::get('/eloquent', function() {
 });
 
 Route::get('/', function () {
-    return redirect()->route('invoice.index');
+    return redirect()->route('invoices.index');
 });
 
 
@@ -104,7 +132,7 @@ Route::middleware(['custom-auth'])->group(function (){
         Route::post('/albums', [AlbumController::class, 'store'])->name('album.store');
         Route::get('/albums/{id}/edit', [AlbumController::class, 'edit'])->name('album.edit');
         Route::post('/albums/{id}', [AlbumController::class, 'update'])->name('album.update');
-        
+
         Route::get('/albumselo/create', [AlbumeloController::class, 'create'])->name('albumelo.create');
         Route::post('/albumselo', [AlbumeloController::class, 'store'])->name('albumelo.store');
         Route::get('/albumselo/{id}/edit', [AlbumeloController::class, 'edit'])->name('albumelo.edit');
@@ -117,6 +145,13 @@ Route::middleware(['custom-auth'])->group(function (){
     Route::middleware(['admin'])->group(function (){
         Route::get('/admin', [SettingsController::class, 'index'])->name('admin');
         Route::post('/admin', [SettingsController::class, 'toggle'])->name('toggle');
+        Route::post('/stats', function(){
+            $artist_num = Artist::count();
+            $album_num = Album::count();
+            $milliseconds = Track::sum('milliseconds');
+            $milliseconds = round($milliseconds/60000);
+            DisplayStats::dispatch($artist_num,$album_num,$milliseconds);
+        })->name('stats');
     });
 });
 

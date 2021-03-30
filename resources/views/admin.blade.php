@@ -13,4 +13,10 @@
             Save Changes
         </button>
     </form>
+    <form method="post" action="{{ route('stats') }}">
+        @csrf
+        <button type="submit" class="btn btn-primary">
+            Email Stats to Users
+        </button>
+    </form>
  @endsection
