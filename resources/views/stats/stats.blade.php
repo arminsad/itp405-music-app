@@ -8,7 +8,7 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">Total number of artists: {{$artist_num}}</li>
             <li class="list-group-item">Total number of albums: {{$album_num}}</li>
-            <li class="list-group-item">Total tracks length: {{$milliseconds}}</li>
+            <li class="list-group-item">Total tracks length: {{$milliseconds}} minutes</li>
         </ul>
   </div>
 @endsection
