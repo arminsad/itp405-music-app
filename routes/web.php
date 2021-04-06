@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\ArtistController;
+use App\Http\Controllers\Api\AlbumController as ApiAlbumController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlaylistController;
@@ -29,6 +31,9 @@ use App\Jobs\DisplayStats;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::resource('albums', ApiAlbumController::class);
+Route::resource('artists', ArtistController::class);
 
 Route::get('/mail', function(){
     // Mail::raw('What is your favorite framework?', function ($message){
